@@ -9,5 +9,5 @@ def augment(
     for datapoint in dataset:
         data, label = datapoint
         data = np.asarray(data)
-        data = augmenter.augments(data)
+        data = augmenter.augments(list(data))
         yield np.asarray(data), np.asarray(label)

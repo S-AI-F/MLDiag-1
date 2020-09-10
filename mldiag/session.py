@@ -1,4 +1,7 @@
+import itertools
 import logging
+
+import numpy as np
 
 from mldiag import runner
 
@@ -9,10 +12,17 @@ class DiagSession(object):
     def __init__(self,
                  config: dict,
                  eval_set,
-                 predictor, ):
+                 predictor,
+                 metrics):
         self.config = config
-        self.eval_set = eval_set
+        # TODO: solve the problem of generator clones to use a generator multipletime
+        # from itertools import tee
+        # self.eval_set, self.true = tee(eval_set)
+        self.eval_set = list(eval_set)
+        # self.true = list(eval_set)
+
         self.predictor = predictor
+        self.metrics = metrics
 
     def _prepare_runners(self):
         runners = []
@@ -25,7 +35,7 @@ class DiagSession(object):
                     import nlpaug.augmenter.char as nac
                     runners.append(
                         runner.augment(
-                            dataset=self.eval_set,
+                            dataset=list(self.eval_set),
                             augmenter=nac.OcrAug(),
                         )
                     )
@@ -35,10 +45,16 @@ class DiagSession(object):
             self,
             runner):
 
-        results = self.predictor(
+        pred = self.predictor(
             runner,
             verbose=2)
-        print(results)
+        pred = np.argmax(pred, axis=-1)
+        y_true = np.array(list(itertools.chain([x[1] for x in self.eval_set]))[0])
+
+        for metric in self.metrics:
+            metric.update_state(y_true.reshape(-1, 1), pred.reshape(-1, 1))
+            result = metric.result().numpy()
+            print(result)
 
     def run(self):
 
