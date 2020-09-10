@@ -9,7 +9,6 @@ def txt_tfds_to_numpy(
     for datapoint in list(tfds.as_numpy(dataset)):
         data, label = datapoint
         data = np.asarray(data)
-        f = lambda x: x.decode("utf-8")
-        v = np.vectorize(f)
+        v = np.vectorize(lambda x: x.decode("utf-8"))
         data = v(data)
         yield data, np.asarray(label)

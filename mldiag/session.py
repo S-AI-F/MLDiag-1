@@ -3,7 +3,7 @@ import logging
 
 import numpy as np
 
-from mldiag import runner
+from mldiag import runners
 
 log = logging.getLogger(__name__)
 
@@ -25,7 +25,7 @@ class DiagSession(object):
         self.metrics = metrics
 
     def _prepare_runners(self):
-        runners = []
+        runs = []
 
         if self.config["diag_services"] == "all":
             macro_task, micro_task = self.config['task'].split(sep=":")
@@ -33,13 +33,13 @@ class DiagSession(object):
             if macro_task == "text":
                 if micro_task == "classification":
                     import nlpaug.augmenter.char as nac
-                    runners.append(
-                        runner.augment(
+                    runs.append(
+                        runners.augment(
                             dataset=list(self.eval_set),
                             augmenter=nac.OcrAug(),
                         )
                     )
-        return runners
+        return runs
 
     def _make_run(
             self,
@@ -57,8 +57,6 @@ class DiagSession(object):
             print(result)
 
     def run(self):
-
-        runners = self._prepare_runners()
-
-        for runner in runners:
+        runs = self._prepare_runners()
+        for runner in runs:
             self._make_run(runner)

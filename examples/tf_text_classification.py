@@ -35,7 +35,7 @@ class TextClassification(object):
 
     def train(self,
               save_model_path):
-        history = self.model.fit(
+        self.model.fit(
             self.train_data.shuffle(10000).batch(512),
             epochs=10,
             validation_data=self.validation_data.batch(512),
@@ -88,6 +88,7 @@ class TextClassification(object):
 
         for name, value in zip(model.metrics_names, results):
             print("%s: %.3f" % (name, value))
+
 
 if __name__ == '__main__':
     fire.Fire(TextClassification)
