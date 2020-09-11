@@ -27,6 +27,12 @@ class Method:
     def get_all_names():
         return list(itertools.chain(*[TextMethod.get_all_names()])) + ["none", "all"]
 
+    @staticmethod
+    def check(method: str):
+        if not (method in Method.get_all_names()):
+            raise ValueError(
+                'Method must be one of {} while {} is passed'.format(Method.get_all_names(), method))
+
 
 class TextMethod:
     METHOD_CHAR_OCR = {

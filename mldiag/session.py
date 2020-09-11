@@ -21,19 +21,16 @@ class DiagSession(object):
         self.metrics = metrics
 
     def _prepare_runners(self):
-        runs = runners.GenericRunner("none").get_all()
-
-        macro_task, micro_task = self.config['task'].split(sep=":")
+        # None runner: run the model on the current dataset without changes
+        runs = runners.GenericRunner(method="none", task="none:none").get_all()
 
         if self.config["diag_services"] == "all":
-
-            if macro_task == "text":
-                if micro_task == "classification":
-                    runs += runners.TextClassificationRunners.get_all()
+            # add all runners
+            runs += runners.Runners(task=self.config['task']).get_all()
         else:
+            # add specific runners
             for run_f in self.config["diag_services"]:
-                # TODO check if the diag method is possible regarding the task
-                runs += runners.GenericRunner(run_f).get_all()
+                runs += runners.GenericRunner(method=run_f, task=self.config['task']).get_all()
 
         return runs
 
@@ -42,8 +39,8 @@ class DiagSession(object):
             runner):
 
         pred = self.predictor(
-            runner['fn'](dataset=self.eval_set),
-            verbose=2)
+            runner['fn'](dataset=self.eval_set)
+        )
         pred = np.argmax(pred, axis=-1)
         y_true = np.array(list(itertools.chain(*[x[1] for x in self.eval_set])))
         results = []
