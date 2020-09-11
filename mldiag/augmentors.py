@@ -6,15 +6,24 @@ from nlpaug.base_augmenter import Augmenter
 
 
 def augment(
-        dataset,
+        dataset: list,
         augmenter: Augmenter,
 ):
-    for datapoint in dataset:
-        data, label = datapoint
+    """
+    a generic augment process on generator
+    :param dataset: dataset generator
+    :param augmenter:
+    :return:
+    """
+    for data_point in dataset:
+        data, label = data_point
         if augmenter is not None:
             data = augmenter.augments(list(data))
         yield np.asarray(data), np.asarray(label)
 
 
+# NULL augmenter
 none_augmenter = partial(augment, augmenter=None)
+
+# OCR error augmenter
 text_ocr_augmnter = partial(augment, augmenter=nac.OcrAug())

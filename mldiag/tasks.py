@@ -7,7 +7,7 @@ class MacroTask(object):
         return [MacroTask.__dict__[m] for m in MacroTask.__dict__.keys() if m.startswith("MACRO_TASK_")]
 
     @staticmethod
-    def check(macro_task):
+    def check(macro_task: str) -> str:
         if macro_task not in MacroTask.get_all():
             raise ValueError(
                 'Macro task must be one of {} while {} is passed'.format(MacroTask.get_all(), macro_task))
@@ -22,7 +22,7 @@ class MicroTask(object):
         return [MicroTask.__dict__[m] for m in MicroTask.__dict__.keys() if m.startswith("MICRO_TASK_")]
 
     @staticmethod
-    def check(micro_task):
+    def check(micro_task: str) -> str:
         if micro_task not in MicroTask.get_all():
             raise ValueError(
                 'Macro task must be one of {} while {} is passed'.format(MicroTask.get_all(), micro_task))
@@ -37,7 +37,7 @@ class Task(object):
         return task.split(":")[:2]
 
     @staticmethod
-    def check(task: str):
+    def check(task: str) -> tuple:
         macro_task, micro_task = Task.split(task)
         if macro_task == "none" and micro_task == "none":
             return macro_task, micro_task

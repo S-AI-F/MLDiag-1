@@ -1,11 +1,26 @@
+from typing import List, Dict
+
 from termcolor import colored
 
 
 class DiagReport(object):
-    def __init__(self, dict_results):
+    """
+    Diagnostic report
+    """
+
+    def __init__(self,
+                 dict_results: List[Dict]):
+        """
+
+        :param dict_results:
+        """
         self.dict_results = dict_results
 
     def out(self):
+        """
+        terminal output
+        :return:
+        """
         print(colored("Method", "yellow"),
               "\t", colored("Metric", "blue"),
               "\t", colored("Result", "grey"),
