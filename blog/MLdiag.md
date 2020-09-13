@@ -72,23 +72,37 @@ We categorize theses tests into several categories and different scenario relate
 </table><h3 id="invariance">Invariance</h3>
 <p>Inputs data are perturbed while measuring there impact on model prediction. This is closely related to data augmentation techniques, where we apply perturbations to inputs during training while preserving the original label. The problem with a <code>brut force</code> data augmentation is its computation cost. Using MLDiag tests, we can observe which perturbations affect the current model , we define then the set of augmentations that improve model consistency.</p>
 <p>The list of model invariance tests is the following:</p>
-<ul>
-<li>Text tasks:
-<ul>
-<li>General classification sub-task:
-<ul>
-<li>Spelling mistake</li>
-<li>Pronoun invariance</li>
-<li>Sentence order invariance</li>
-</ul>
-</li>
-<li>
-<h2 id="sentiment-classification-sub-task">Sentiment classification sub-task</h2>
-</li>
-</ul>
-</li>
-</ul>
-<h2 id="further-reading">Further reading</h2>
+
+<table>
+<thead>
+<tr>
+<th align="center">Test</th>
+<th align="center">Data</th>
+<th align="center">Target(s)</th>
+<th align="center">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="center">Spell</td>
+<td align="center">Text</td>
+<td align="center">Classification</td>
+<td align="center">how much spelling mistakes affect the model</td>
+</tr>
+<tr>
+<td align="center">Pronoun</td>
+<td align="center">Text</td>
+<td align="center">Classification</td>
+<td align="center">how much changing pronoun words impacts the model</td>
+</tr>
+<tr>
+<td align="center">Sent-Order</td>
+<td align="center">Text</td>
+<td align="center">Classification</td>
+<td align="center">how much sentence disorder  impacts the model</td>
+</tr>
+</tbody>
+</table><h2 id="further-reading">Further reading</h2>
 <p><strong>Blog posts</strong><br>
 Jeremy Jordan, <a href="https://www.jeremyjordan.me/testing-ml/?utm_campaign=Data_Elixir&amp;utm_source=Data_Elixir_300">Effective testing for machine learning systems</a>, Aug 2020</p>
 <p><strong>Papers</strong></p>
