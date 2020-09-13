@@ -28,7 +28,7 @@ Visit this introduction to understand about [MLDiag](https://).
 
 
 
-## Installation
+## Quick start
 The library supports python 3.5+ in linux and window platform.
 
 To install the library:
