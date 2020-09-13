@@ -88,8 +88,10 @@ Jeremy Jordan, <a href="https://www.jeremyjordan.me/testing-ml/?utm_campaign=Dat
 <p><strong>Papers</strong></p>
 <ul>
 <li><a href="https://homes.cs.washington.edu/~marcotcr/acl20_checklist.pdf">Beyond Accuracy: Behavioral Testing of NLP Models with CheckList</a></li>
-<li><a href="http://proceedings.mlr.press/v97/odena19a/odena19a.pdf">TensorFuzz: Debugging Neural Networks with Coverage-Guided Fuzzing</a><br>
-<strong>Softwares</strong></li>
+<li><a href="http://proceedings.mlr.press/v97/odena19a/odena19a.pdf">TensorFuzz: Debugging Neural Networks with Coverage-Guided Fuzzing</a></li>
+</ul>
+<p><strong>Softwares</strong></p>
+<ul>
 <li><a href="https://github.com/uwdata/errudite">Errudites</a> an interactive tool for scalable, reproducible, and counterfactual error analysis of NLP models.</li>
 </ul>
 
