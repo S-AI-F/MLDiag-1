@@ -4,7 +4,7 @@ from typing import Generator, List, Dict
 
 import numpy as np
 
-from mldiag import report, runners
+from mldiag import report, runners, metrics
 
 log = logging.getLogger(__name__)
 
@@ -18,11 +18,11 @@ class DiagSession(object):
                  config: dict,
                  eval_set: Generator,
                  predictor,
-                 metrics: List):
+                 metric):
         self.config = config
         self.eval_set = list(eval_set)
         self.predictor = predictor
-        self.metrics = metrics
+        self.metric = metrics.Metric(metric)
 
     def _prepare_runners(self) -> List:
         """
@@ -44,7 +44,7 @@ class DiagSession(object):
 
     def _make_run(
             self,
-            runner: Dict) -> List[Dict]:
+            runner: Dict) -> Dict:
         '''
         Make one run
         :param runner: the runner on the eval set
@@ -59,16 +59,14 @@ class DiagSession(object):
         # TODO: check when there is no batch for chain list
         y_true = np.array(list(itertools.chain(*[x[1] for x in self.eval_set])))
 
-        results = []
-        for metric in self.metrics:
-            # TODO: define custom metric object
-            metric.update_state(y_true.reshape(-1, 1), pred.reshape(-1, 1))
-            result = {"Method": runner['name'],
-                      "Metric": metric.__class__.__name__,
-                      "Result": metric.result().numpy()}
-            results.append(result)
+        result = self.metric.eval(
+            y_true=y_true.reshape(-1, 1),
+            y_pred=pred.reshape(-1, 1)
+        )
 
-        return results
+        return {"Method": runner['name'],
+                "Metric": result['Metric'],
+                "Result": result['Result']}
 
     def run(self):
         '''
@@ -81,7 +79,7 @@ class DiagSession(object):
 
         results = []
         for runner in runs:
-            results += self._make_run(runner)
+            results.append(self._make_run(runner))
 
         # make report
         rep = report.DiagReport(dict_results=results)

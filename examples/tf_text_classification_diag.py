@@ -35,14 +35,14 @@ class DiagTextClassification(object):
 
         self.predictor = pipeline.predict
 
-        self.metrics = [tf.keras.metrics.BinaryAccuracy()]
+        self.metric = tf.keras.metrics.BinaryAccuracy()
 
     def run(self):
         diag_session = DiagSession(
             config=custom_config,
             eval_set=self.eval_set,
             predictor=self.predictor,
-            metrics=self.metrics
+            metric=self.metric
         )
 
         diag_session.run()
