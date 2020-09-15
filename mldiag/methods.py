@@ -1,11 +1,12 @@
 from typing import List, Dict
 
-from mldiag import augmentors
+from mldiag import augmentors, descriptors
 
 
 class Method:
     # None method to return the original dataset used to compare results obtained by other augmenters
     NONE = {
+        "type": "augment",
         "name": "none",
         "fn": augmentors.none_augmenter
     }
@@ -67,8 +68,15 @@ class TextMethod:
 
     # augment a text with ocr errors
     METHOD_CHAR_OCR = {
+        "type": "augment",
         "name": "char_ocr",
         "fn": augmentors.text_ocr_augmnter
+    }
+
+    METHOD_TXT_LEN = {
+        "type": "describe",
+        "name": "text_len",
+        "fn": descriptors.text_len_descriptor
     }
 
     @staticmethod

@@ -9,7 +9,9 @@ class Diagnostics(object):
     ACCEPTED = [
         (tasks.Task.NONE, tasks.Task.NONE, methods.Method.NONE["name"]),
         (tasks.MacroTask.MACRO_TASK_TXT, tasks.MicroTask.MICRO_TASK_CLASSIFICATION,
-         methods.TextMethod.METHOD_CHAR_OCR["name"])
+         methods.TextMethod.METHOD_CHAR_OCR["name"]),
+        (tasks.MacroTask.MACRO_TASK_TXT, tasks.MicroTask.MICRO_TASK_CLASSIFICATION,
+         methods.TextMethod.METHOD_TXT_LEN["name"])
     ]
 
     @staticmethod

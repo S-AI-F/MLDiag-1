@@ -42,15 +42,8 @@ class DiagSession(object):
 
         return runs
 
-    def _make_run(
-            self,
-            runner: Dict) -> Dict:
-        '''
-        Make one run
-        :param runner: the runner on the eval set
-        :return: list of runners results
-        '''
-
+    def _make_augment_run(self,
+                          runner: Dict) -> Dict:
         pred = self.predictor(
             runner['fn'](dataset=self.eval_set)
         )
@@ -64,9 +57,32 @@ class DiagSession(object):
             y_pred=pred.reshape(-1, 1)
         )
 
-        return {"Method": runner['name'],
+        return {"Type": "augment",
+                "Method": runner['name'],
                 "Metric": result['Metric'],
                 "Result": result['Result']}
+
+    def _make_describe_run(self,
+                           runner: Dict) -> Dict:
+        out = runner['fn'](dataset=self.eval_set)
+        print(out)
+        return {"Type": "describe"}
+
+    def _make_run(
+            self,
+            runner: Dict) -> Dict:
+        '''
+        Make one run
+        :param runner: the runner on the eval set
+        :return: list of runners results
+        '''
+
+        if runner['type'] == "augment":
+            return self._make_augment_run(runner)
+        if runner['type'] == "describe":
+            return self._make_describe_run(runner)
+        raise ValueError("Unknown runner type {}, should be in {}".format(runner['type'], ["augment", "describe"]))
+
 
     def run(self):
         '''

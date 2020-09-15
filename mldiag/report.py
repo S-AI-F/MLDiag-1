@@ -33,8 +33,9 @@ class DiagReport(object):
               "\t", colored("-", "grey"))
 
         for dict_result in self.dict_results[1:]:
-            diff_result = dict_result["Result"] - dict_result_0["Result"]
-            print(colored(dict_result["Method"], "yellow"),
-                  "\t", colored(dict_result["Metric"], "blue"),
-                  "\t", colored(dict_result["Result"], "grey"),
-                  "\t", colored(diff_result, "red") if diff_result < 0 else colored(diff_result, "green"))
+            if dict_result["Type"] == "augment":
+                diff_result = dict_result["Result"] - dict_result_0["Result"]
+                print(colored(dict_result["Method"], "yellow"),
+                      "\t", colored(dict_result["Metric"], "blue"),
+                      "\t", colored(dict_result["Result"], "grey"),
+                      "\t", colored(diff_result, "red") if diff_result < 0 else colored(diff_result, "green"))
