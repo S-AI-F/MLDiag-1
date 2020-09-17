@@ -7,11 +7,21 @@ class Diagnostics(object):
     example: (text, classification, char_ocr)
     """
     ACCEPTED = [
-        (tasks.Task.NONE, tasks.Task.NONE, methods.Method.NONE["name"]),
-        (tasks.MacroTask.MACRO_TASK_TXT, tasks.MicroTask.MICRO_TASK_CLASSIFICATION,
+        (tasks.Task.NONE,
+         tasks.Task.NONE,
+         methods.Method.NONE["name"]),
+        (tasks.MacroTask.MACRO_TASK_TXT,
+         tasks.MicroTask.MICRO_TASK_CLASSIFICATION,
          methods.TextMethod.METHOD_CHAR_OCR["name"]),
-        (tasks.MacroTask.MACRO_TASK_TXT, tasks.MicroTask.MICRO_TASK_CLASSIFICATION,
-         methods.TextMethod.METHOD_TXT_LEN["name"])
+        (tasks.MacroTask.MACRO_TASK_TXT,
+         tasks.MicroTask.MICRO_TASK_CLASSIFICATION,
+         methods.TextMethod.METHOD_TXT_CHAR_COUNT["name"]),
+        (tasks.MacroTask.MACRO_TASK_TXT,
+         tasks.MicroTask.MICRO_TASK_CLASSIFICATION,
+         methods.TextMethod.METHOD_TXT_SENTENCE_COUNT["name"]),
+        (tasks.MacroTask.MACRO_TASK_TXT,
+         tasks.MicroTask.MICRO_TASK_CLASSIFICATION,
+         methods.TextMethod.METHOD_TXT_WORD_COUNT["name"])
     ]
 
     @staticmethod

@@ -73,10 +73,22 @@ class TextMethod:
         "fn": augmentors.text_ocr_augmnter
     }
 
-    METHOD_TXT_LEN = {
+    METHOD_TXT_CHAR_COUNT = {
         "type": "describe",
-        "name": "text_len",
-        "fn": descriptors.text_len_descriptor
+        "name": "text_char_count",
+        "fn": descriptors.text_char_count_descriptor
+    }
+
+    METHOD_TXT_SENTENCE_COUNT = {
+        "type": "describe",
+        "name": "text_sentence_count",
+        "fn": descriptors.text_sentence_count_descriptor
+    }
+
+    METHOD_TXT_WORD_COUNT = {
+        "type": "describe",
+        "name": "text_word_count",
+        "fn": descriptors.text_word_count_descriptor
     }
 
     @staticmethod

@@ -11,7 +11,7 @@ def augment(
 ):
     """
     a generic augment process on generator
-    :param dataset: dataset generator
+    :param dataset: dataset generator (batch)
     :param augmenter:
     :return:
     """

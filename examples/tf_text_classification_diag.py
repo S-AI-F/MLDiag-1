@@ -13,7 +13,8 @@ custom_config = {
     "diag_services": "all",  # list of required services
     "model_framework": "tensorflow",  # TODO add version if required, exp: tensorflow:2.x
     "metrics": ["accuracy"],
-    "batch_size": 512
+    "batch_size": 512,
+    "report_file_path": r"C:\Users\SHABOUA\ws\tmp\mldiag\report.html"
 }
 
 
