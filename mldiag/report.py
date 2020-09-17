@@ -64,7 +64,7 @@ class DiagReport(object):
         with tag('html'):
             with tag('body'):
                 text("Welcome to our site")
-                doc.stag('img', src='file:../resources/ml-diag.jpg', width="200", height="200")
+                doc.stag('img', src='https://github.com/AI-MEN/MLDiag/resources/ml-diag.jpg', width="200", height="200")
 
         print(doc.getvalue())
         with open(html_file_path, "w") as text_file:
