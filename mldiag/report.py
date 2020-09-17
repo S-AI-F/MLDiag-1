@@ -1,5 +1,10 @@
-from typing import List, Dict
+import base64
+import pathlib
+from io import BytesIO
+from typing import List, Dict, Union
 
+import PIL
+import numpy as np
 from termcolor import colored
 from yattag import Doc
 
@@ -64,16 +69,47 @@ class DiagReport(object):
         with tag('html'):
             with tag('body'):
                 text("Welcome to our site")
-                doc.stag('img', src='https://github.com/AI-MEN/MLDiag/resources/ml-diag.jpg', width="200", height="200")
+                doc.stag('img', src=self._html_src_image('../resources/ml-diag.jpg'), width="200", height="200")
 
         print(doc.getvalue())
         with open(html_file_path, "w") as text_file:
             text_file.write(doc.getvalue())
-        '''
-        # Add main header
-        document.add_header('ML Diag', level='h1', align='center')
-        # load the image
-        image = Image.open('../resources/ml-diag.png').convert("RGB")
-        # convert image to numpy array
-        data = asarray(image)
-        '''
+
+    def _html_src_image(self, image_path):
+        image = PIL.Image.open(image_path)
+        data = np.asarray(image)
+        image_encoded_str = self._encode_image(data)
+        return f'data:image/jpg;base64, {image_encoded_str}'
+
+    def _encode_image(
+            self,
+            image: Union[np.ndarray, PIL.Image.Image, pathlib.Path, str],
+    ) -> str:
+        """Encode image to base64 string."""
+        if isinstance(image, np.ndarray):
+            if image.dtype != np.uint8:
+                raise RuntimeError(
+                    f'image.dtype is {image.dtype}, but it should be uint8.'
+                )
+            if not (image.ndim == 2 or image.ndim == 3):
+                raise RuntimeError(
+                    f'image.ndim is {image.ndim}, but it should be 2 or 3.'
+                )
+            buff = BytesIO()
+            PIL.Image.fromarray(image).save(buff, format='PNG')
+            encoded = base64.b64encode(buff.getvalue())
+        elif isinstance(image, PIL.Image.Image):
+            buff = BytesIO()
+            image.save(buff, format='PNG')
+            encoded = base64.b64encode(buff.getvalue())
+        elif isinstance(image, pathlib.Path):
+            encoded = base64.b64encode(open(str(image), 'rb').read())
+        elif isinstance(image, str):
+            encoded = base64.b64encode(open(image, 'rb').read())
+        else:
+            raise TypeError(
+                f'image is of type {type(image)}, but it should be one of: '
+                f'{np.ndarray}, {PIL.Image.Image}, {pathlib.Path} or {str}.'
+            )
+        image_encoded_str = encoded.decode('utf-8')
+        return image_encoded_str
