@@ -7,29 +7,24 @@
 
 This python library helps you diagnose machine learning models before deployment. 
 
-Visit this introduction to understand about [MLDiag](https://). 
+Visit this introduction to understand about [MLDiag](https://github.com/AI-MEN/MLDiag/blob/master/blog/MLdiag.md). 
 
 
 ## Features
 *   Generate synthetic data with adversarial attacks to evaluate model robustness
+*   Make some interesting statistics on model behaviour
 *   Simple, easy-to-use and lightweight library. Diagnose data in 3 lines of code
 *   Plug and play to any neural network frameworks (e.g. PyTorch, TensorFlow) or standard machine learning framework (e.g. scikit-learn)
 *   Support textual, image, audio and structured data
 *   Can be added in a CI workflow
+*   Can be used in command line or python scripts
 
     
 ## Quick Demo
 *   [Example of diagnosis of Text classification model](https://github.com/AI-MEN/mldiag/blob/master/examples/tf_text_classification_diag.py)
 
-## Diagnostics
-| Diagnostic | Target | Action | Description |
-|:---:|:---:|:---:|:---:|
-|Textual| Character | OCRError | Simulate ocr error |
-
-
-
 ## Quick start
-The library supports python 3.5+ in linux and window platform.
+The library supports python 3.7+ in linux and window platform.
 
 To install the library:
 ```bash
@@ -39,6 +34,13 @@ or install the latest version (include BETA features) from github directly
 ```bash
 pip install git+https://github.com/AI-MEN/mldiag.git
 ```
+
+## Diagnostics
+| Diagnostic | Target | Action | Description |
+|:---:|:---:|:---:|:---:|
+|Textual| Character | OCRError | Simulate ocr error |
+
+
 
 
 ## Recent Changes

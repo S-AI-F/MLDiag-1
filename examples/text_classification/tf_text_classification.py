@@ -1,6 +1,7 @@
 import os
 
 import fire
+import numpy as np
 import tensorflow as tf
 import tensorflow_datasets as tfds
 import tensorflow_hub as hub
@@ -57,38 +58,11 @@ class TextClassification(object):
             self.test_data.batch(512),
             verbose=2)
 
-        for name, value in zip(model.metrics_names, results):
-            print("%s: %.3f" % (name, value))
-
-    def adversial(self,
-                  model_path):
-        model = tf.keras.models.load_model(
-            model_path,
-            custom_objects={'KerasLayer': hub.KerasLayer})
-
-        def augment(dataset, aug):
-            # iterate over all sentences
-            for datapoint in tfds.as_numpy(dataset):
-                sentence, label = datapoint
-                new_sentence = aug.augment(sentence.decode('utf-8'))
-                yield tf.convert_to_tensor(new_sentence), label
-
-        from functools import partial
-        import nlpaug.augmenter.char as nac
-        aug = nac.OcrAug()
-        BATCH = 512
-        test_batches = tf.data.Dataset.from_generator(
-            partial(augment, dataset=self.test_data, aug=aug),
-            output_types=(tf.string, tf.int64),
-            output_shapes=(tf.TensorShape([]), tf.TensorShape([]))
-        ).batch(BATCH)
-        results = model.evaluate(
-            test_batches,
-            verbose=2)
+        test_set = np.array(list(tfds.as_numpy(self.test_data.batch(512).take(1))))
+        np.save(os.path.join(os.path.dirname(model_path), 'test'), test_set)
 
         for name, value in zip(model.metrics_names, results):
             print("%s: %.3f" % (name, value))
-
 
 if __name__ == '__main__':
     fire.Fire(TextClassification)

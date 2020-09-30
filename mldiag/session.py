@@ -17,11 +17,11 @@ class DiagSession(object):
     def __init__(self,
                  config: dict,
                  eval_set: Generator,
-                 predictor,
+                 service,
                  metric):
         self.config = config
         self.eval_set = list(eval_set)
-        self.predictor = predictor
+        self.service = service
         self.metric = metrics.Metric(metric)
         self.original_y_pred = None  # predictions of the model on the original eval set
         self.y_true = np.array(list(itertools.chain(*[x[1] for x in self.eval_set])))
@@ -44,7 +44,7 @@ class DiagSession(object):
 
     def _make_augment_run(self,
                           runner: Dict) -> Dict:
-        pred = self.predictor(
+        pred = self.service.predict(
             runner['fn'](dataset=self.eval_set)
         )
         pred = np.argmax(pred, axis=-1)

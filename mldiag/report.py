@@ -81,7 +81,10 @@ class DiagReport(object):
             doc.stag('link', href="./ml-diag.css", rel="stylesheet", type="text/css", media="screen")
             with tag('body'):
                 with tag('center'):
-                    doc.stag('img', src=self._html_src_image('../resources/ml-diag.jpg'), width="200", height="200")
+                    logo_path = os.path.join(
+                        os.path.dirname(os.path.dirname(__file__)),
+                        "resources/ml-diag.jpg")
+                    doc.stag('img', src=self._html_src_image(logo_path), width="200", height="200")
                     line("h1", "MLDiag: Machine Learning Diagnostics tool")
                 line("h2", "Invariance report")
                 with tag('table'):
@@ -133,7 +136,11 @@ class DiagReport(object):
         # print(doc.getvalue())
         with open(html_file_path, "w") as text_file:
             text_file.write(doc.getvalue())
-        shutil.copyfile("../resources/ml-diag.css", os.path.join(os.path.split(html_file_path)[0], "ml-diag.css"))
+        css_path = os.path.join(
+            os.path.dirname(os.path.dirname(__file__)),
+            "resources/ml-diag.css"
+        )
+        shutil.copyfile(css_path, os.path.join(os.path.split(html_file_path)[0], "ml-diag.css"))
 
     def _plot_hist(self, res, y_data, normalize=False):
         colors = px.colors.sequential.Plasma * 2
