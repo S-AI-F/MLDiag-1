@@ -27,3 +27,5 @@ setuptools.setup(
     install_requires=requirements,
     data_files=[('resources', ['resources/ml-diag.css', 'resources/ml-diag.jpg']), ],
 )
+
+# twine upload --repository-url https://upload.pypi.org/legacy/ dist/*
