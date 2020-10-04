@@ -51,7 +51,7 @@ python examples/text_classification/tf_text_classification.py train --save_model
 a tensorflow model `model.h5` is created in the `mldiag` directory
 - Run a text classification web service:
 ```bash
-python examples/text_classification/flask_text_classification_service.py ./mldiag/model.h5
+python examples/text_classification/flask_text_classification_service.py  --model_path ./mldiag/model.h5
 ```
 a local webservice is running under `http://localhost:8080/query`
 - create the test set to diagnose the model
@@ -66,7 +66,11 @@ python mldiag/cli.py diagnose   --eval_set "./mldiag/test.npy"
                                 --config_file  "examples/text_classification/config_text_classification.yaml" 
                                 --service_url http://localhost:8080/query
                                 --report_path "./mldiag"
+                                --json_field "results"
 ```
+where `results` is the key used to jsonify data from the webservice (see the web service script).
+
+![MLDiag](https://github.com/AI-MEN/MLDiag/tree/master/blog/capture.jpg =300x100)
 
 #### Method 2
 This method uses python scripts.
