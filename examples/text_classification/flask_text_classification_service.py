@@ -10,8 +10,9 @@ model = None
 
 
 def load_model(model_path):
+    print("Loading model at {}".format(model_path))
     return tf.keras.models.load_model(
-        filepath=r"C:\Users\SHABOUA\ws\tmp\mldiag\model.h5",
+        filepath=model_path,
         custom_objects={'KerasLayer': hub.KerasLayer})
 
 
@@ -28,7 +29,6 @@ if __name__ == '__main__':
 
 
     def file_path(path):
-        print(path)
         if os.path.isfile(path):
             return path
         else:
@@ -36,7 +36,7 @@ if __name__ == '__main__':
 
 
     parser = ArgumentParser()
-    parser.add_argument('model_path', type=file_path, help="Model Path")
+    parser.add_argument('--model_path', type=file_path, help="Model Path")
     args = parser.parse_args()
     model = load_model(args.model_path)
 

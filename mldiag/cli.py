@@ -1,3 +1,5 @@
+import os
+
 import click
 import tensorflow as tf
 import yaml
@@ -24,15 +26,27 @@ def diag():
     '--eval_set', '-e',
     help='the path to the eval dataset file',
 )
-def diagnose(service_url, config_file, eval_set):
+@click.option(
+    '--report_path', '-r',
+    help='the path to output report directory',
+)
+@click.option(
+    '--json_field', '-j',
+    help='the json field  data returned by the webservice',
+)
+def diagnose(service_url, config_file, eval_set, report_path, json_field):
     with open(config_file) as file:
         custom_config = yaml.load(file, Loader=yaml.FullLoader)
+
+    if not os.path.isdir(report_path):
+        raise ValueError("Missing output directory {} for reporting".format(report_path))
 
     DiagSession(
         config=custom_config,
         eval_set=npy_to_numpy(eval_set),
-        service=url_to_service(service_url),
-        metric=tf.keras.metrics.BinaryAccuracy()
+        service=url_to_service(service_url, json_field),
+        metric=tf.keras.metrics.BinaryAccuracy(),
+        report_path=report_path,
     ).run()
 
 

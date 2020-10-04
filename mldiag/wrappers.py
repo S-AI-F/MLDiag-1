@@ -1,3 +1,5 @@
+from typing import Type
+
 import numpy as np
 import requests
 import tensorflow as tf
@@ -19,7 +21,6 @@ def txt_tfds_to_numpy(
 def npy_to_numpy(
         dataset_path: str
 ):
-    print(dataset_path)
     for datapoint in np.load(dataset_path, allow_pickle=True):
         data, label = datapoint
         v = np.vectorize(lambda x: x.decode("utf-8"))
@@ -27,20 +28,23 @@ def npy_to_numpy(
         yield data, np.asarray(label)
 
 
-def tf_model_to_service(*args, **kwargs):
+def tf_model_to_service(*args, **kwargs) -> Type[Service]:
     service = Service()
     service.predict = (tf.keras.models.load_model(*args, **kwargs)).predict
     return service
 
 
-def url_to_service(url):
+def url_to_service(url: str,
+                   json_field: str) -> Type[Service]:
     service = Service()
 
     def fn(x):
+        # generator to list
         x = list(x)
-        x = list(x[0][0])
-        print(x)
-        return requests.post(url, json={"text": x}).json()['results']
+        # the list is one tuple of (numpy_array of data, numpy_array of labels)
+        x = x[0]  # the first tuple
+        x = list(x[0])  # numpy array data to list
+        return requests.post(url, json={"text": x}).json()[json_field]
 
     service.predict = fn
     return service

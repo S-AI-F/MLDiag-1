@@ -25,9 +25,9 @@ def wrap_tfds_as_data(
     return txt_tfds_to_numpy(test_data.take(1))
 
 
-def wrap_tf_model_as_service() -> Type[Service]:
+def wrap_tf_model_as_service(model_path: str) -> Type[Service]:
     return tf_model_to_service(
-        filepath=r"C:\Users\SHABOUA\ws\tmp\mldiag\model.h5",
+        filepath=model_path,
         custom_objects={'KerasLayer': hub.KerasLayer}
     )
 
@@ -41,13 +41,16 @@ class DiagTextClassification(object):
         with open(config_path) as file:
             self.custom_config = yaml.load(file, Loader=yaml.FullLoader)
 
-    def run(self):
+    def run(self,
+            model_path,
+            report_path):
         # run diag session
         DiagSession(
             config=self.custom_config,
             eval_set=wrap_tfds_as_data(self.custom_config),
-            service=wrap_tf_model_as_service(),
-            metric=tf.keras.metrics.BinaryAccuracy()
+            service=wrap_tf_model_as_service(model_path),
+            metric=tf.keras.metrics.BinaryAccuracy(),
+            report_path=report_path
         ).run()
 
 

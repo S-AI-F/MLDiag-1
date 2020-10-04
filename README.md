@@ -24,6 +24,8 @@ Visit this introduction to understand about [MLDiag](https://github.com/AI-MEN/M
 *   [Example of diagnosis of Text classification model](https://github.com/AI-MEN/mldiag/blob/master/examples/tf_text_classification_diag.py)
 
 ## Quick start
+
+### Installation
 The library supports python 3.7+ in linux and window platform.
 
 To install the library:
@@ -34,7 +36,53 @@ or install the latest version (include BETA features) from github directly
 ```bash
 pip install git+https://github.com/AI-MEN/mldiag.git
 ```
+### Run a diagostic
 
+#### Method 1: 
+
+This method uses command lines only. 
+It requires a model running as a webservice.
+We provide for a demo a complete example:
+
+- create a text classification model:
+```bash
+python examples/text_classification/tf_text_classification.py train --save_model_path=./mldiag
+```
+a tensorflow model `model.h5` is created in the `mldiag` directory
+- Run a text classification web service:
+```bash
+python examples/text_classification/flask_text_classification_service.py ./mldiag/model.h5
+```
+a local webservice is running under `http://localhost:8080/query`
+- create the test set to diagnose the model
+```bash
+python examples/text_classification/tf_text_classification.py save_test_set --out_path=./mldiag
+```
+a test set `test.npy` is saved in `mldiag`. 
+It contains a numpy array of text examples and their class labels
+- run the diagnostic application calling the web service
+```bash
+python mldiag/cli.py diagnose   --eval_set "./mldiag/test.npy" 
+                                --config_file  "examples/text_classification/config_text_classification.yaml" 
+                                --service_url http://localhost:8080/query
+                                --report_path "./mldiag"
+```
+
+#### Method 2
+This method uses python scripts.
+it supports a number of machine learning models and data formats through wrappers.
+Ready to use wrappers can be found in [mldiag/wrappers.py](https://github.com/AI-MEN/MLDiag/blob/master/mldiag/wrappers.py)
+In the following, a complete example is proposed as demo.
+
+- create a text classification model:
+```bash
+python examples/text_classification/tf_text_classification.py train --save_model_path=./mldiag
+```
+a tensorflow model `model.h5` is created in the `mldiag` directory
+- call the  python scrip (the diagnose config file is available in `examples/text_classification/config_text_classification.yaml`):
+```bash
+python examples/text_classification/tf_text_classification_diag.py run --model_path=./mldiag/model.h5 --repor_path=./mldiag
+```
 ## Diagnostics
 | Diagnostic | Target | Action | Description |
 |:---:|:---:|:---:|:---:|

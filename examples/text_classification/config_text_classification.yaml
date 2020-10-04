@@ -1,4 +1,3 @@
 task: text:classification
 diag_services: all
 batch_size: 512
-report_file_path: C:/Users/SHABOUA/ws/tmp/mldiag/report.html

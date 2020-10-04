@@ -74,7 +74,11 @@ class DiagReport(object):
                   "\t", dict_result["Result"][2], )
 
     def html(self,
-             html_file_path):
+             report_path):
+        if not os.path.isdir(report_path):
+            raise ValueError("Missing output directory {} for reporting".format(report_path))
+
+        html_file_path = os.path.join(report_path, 'report.html')
         doc, tag, text, line = Doc().ttl()
         doc.asis('<!DOCTYPE html>')
         with tag('html'):
@@ -140,7 +144,7 @@ class DiagReport(object):
             os.path.dirname(os.path.dirname(__file__)),
             "resources/ml-diag.css"
         )
-        shutil.copyfile(css_path, os.path.join(os.path.split(html_file_path)[0], "ml-diag.css"))
+        shutil.copyfile(css_path, os.path.join(report_path, "ml-diag.css"))
 
     def _plot_hist(self, res, y_data, normalize=False):
         colors = px.colors.sequential.Plasma * 2

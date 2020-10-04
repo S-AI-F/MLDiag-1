@@ -18,13 +18,15 @@ class DiagSession(object):
                  config: dict,
                  eval_set: Generator,
                  service,
-                 metric):
+                 metric,
+                 report_path):
         self.config = config
         self.eval_set = list(eval_set)
         self.service = service
         self.metric = metrics.Metric(metric)
         self.original_y_pred = None  # predictions of the model on the original eval set
         self.y_true = np.array(list(itertools.chain(*[x[1] for x in self.eval_set])))
+        self.report_path = report_path
 
     def _prepare_runners(self) -> List:
         """
@@ -119,4 +121,4 @@ class DiagSession(object):
             dict_results_augment=results_augment,
             dict_results_describe=results_describe)
         rep.out()
-        rep.html(html_file_path=self.config["report_file_path"])
+        rep.html(report_path=self.report_path)

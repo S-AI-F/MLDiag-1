@@ -36,6 +36,9 @@ class TextClassification(object):
 
     def train(self,
               save_model_path):
+        if not os.path.isdir(save_model_path):
+            raise ValueError("Missing output directory {} for reporting".format(save_model_path))
+
         self.model.fit(
             self.train_data.shuffle(10000).batch(512),
             epochs=10,
@@ -58,11 +61,22 @@ class TextClassification(object):
             self.test_data.batch(512),
             verbose=2)
 
-        test_set = np.array(list(tfds.as_numpy(self.test_data.batch(512).take(1))))
-        np.save(os.path.join(os.path.dirname(model_path), 'test'), test_set)
-
         for name, value in zip(model.metrics_names, results):
             print("%s: %.3f" % (name, value))
+
+    def save_test_set(self,
+                      out_path,
+                      batch_size=512,
+                      num_batches=1):
+        if not os.path.isdir(out_path):
+            raise ValueError("out_path {} not found".format(out_path))
+
+        test_set = np.array(list(tfds.as_numpy(self.test_data.batch(batch_size).take(num_batches))))
+        print("test set shape = {}".format(test_set.shape))
+        test_set_path = os.path.join(out_path, 'test')
+        np.save(test_set_path, test_set)
+        print("saved in {}".format(test_set_path + ".npy"))
+
 
 if __name__ == '__main__':
     fire.Fire(TextClassification)
