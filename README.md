@@ -6,6 +6,7 @@
 <p align="center">
 <img width="200" alt="mldiag" src="https://github.com/AI-MEN/MLDiag/blob/master/resources/ml-diag.jpg">
 </p>
+
 # MLDiag
 
 This python library helps you diagnose machine learning models before deployment. 
@@ -75,6 +76,7 @@ where `results` is the key used to jsonify data from the webservice (see the web
 <p align="center">
 <img width="700" alt="mldiag" src="https://github.com/AI-MEN/MLDiag/blob/master/blog/capture.jpg">
 </p>
+
 #### Method 2
 This method uses python scripts.
 it supports a number of machine learning models and data formats through wrappers.
