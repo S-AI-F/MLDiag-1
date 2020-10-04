@@ -70,7 +70,7 @@ python mldiag/cli.py diagnose   --eval_set "./mldiag/test.npy"
 ```
 where `results` is the key used to jsonify data from the webservice (see the web service script).
 
-![MLDiag](https://github.com/AI-MEN/MLDiag/tree/master/blog/capture.jpg =300x100)
+<img width="500" alt="mldiag" src="https://github.com/AI-MEN/MLDiag/blob/master/blog/capture.jpg">
 
 #### Method 2
 This method uses python scripts.
