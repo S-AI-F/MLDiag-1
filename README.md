@@ -3,6 +3,9 @@
 [![Coverage Status](https://codecov.io/gh/AI-MEN/MLDiag/branch/master/graph/badge.svg)](https://codecov.io/gh/AI-MEN/MLDiag) 
 [![CodeFactor](https://www.codefactor.io/repository/github/AI-MEN/MLDiag/badge)](https://www.codefactor.io/repository/github/AI-MEN/MLDiag)
 
+<p align="center">
+<img width="200" alt="mldiag" src="https://github.com/AI-MEN/MLDiag/blob/master/resources/ml-diag.jpg">
+</p>
 # MLDiag
 
 This python library helps you diagnose machine learning models before deployment. 
@@ -69,9 +72,9 @@ python mldiag/cli.py diagnose   --eval_set "./mldiag/test.npy"
                                 --json_field "results"
 ```
 where `results` is the key used to jsonify data from the webservice (see the web service script).
-
-<img width="500" alt="mldiag" src="https://github.com/AI-MEN/MLDiag/blob/master/blog/capture.jpg">
-
+<p align="center">
+<img width="700" alt="mldiag" src="https://github.com/AI-MEN/MLDiag/blob/master/blog/capture.jpg">
+</p>
 #### Method 2
 This method uses python scripts.
 it supports a number of machine learning models and data formats through wrappers.
