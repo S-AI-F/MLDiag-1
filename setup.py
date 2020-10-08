@@ -25,7 +25,17 @@ setuptools.setup(
     python_requires='>=3.7',
     keywords=["diagnose", "machine learning", "deep learning", "augmenter", "tensorflow", "pytorch", "scikit-learn"],
     install_requires=requirements,
-    data_files=[('resources', ['resources/ml-diag.css', 'resources/ml-diag.jpg']), ],
+    data_files=[('resources', ['resources/ml-diag.css', 'resources/ml-diag.jpg']),
+                ('examples', ['examples/text_classification/tf_text_classification_diag.py',
+                              'examples/text_classification/model.h5',
+                              'examples/text_classification/config_text_classification.yaml',
+                              'examples/text_classification/__init__.py', ])
+                ],
+    entry_points={
+        'console_scripts': ['mldiag_test=examples.tf_text_classification_diag:main'],
+    }
 )
+'''
 
+'''
 # twine upload --repository-url https://upload.pypi.org/legacy/ dist/*

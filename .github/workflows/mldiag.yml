@@ -52,3 +52,7 @@ jobs:
           token: ${{ secrets.CODECOV_TOKEN }}
           file: ./coverage.xml
           flags: unittests
+      - name: Diag
+        run: |
+          # pip install mldiag
+          mldiag_test run

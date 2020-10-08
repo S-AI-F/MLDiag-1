@@ -121,4 +121,5 @@ class DiagSession(object):
             dict_results_augment=results_augment,
             dict_results_describe=results_describe)
         rep.out()
-        rep.html(report_path=self.report_path)
+        if self.report_path:
+            rep.html(report_path=self.report_path)

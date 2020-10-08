@@ -1,3 +1,5 @@
+#!/usr/bin/env python
+
 import os
 from typing import Dict, Type
 
@@ -40,10 +42,14 @@ class DiagTextClassification(object):
                                    "config_text_classification.yaml")
         with open(config_path) as file:
             self.custom_config = yaml.load(file, Loader=yaml.FullLoader)
+        self._default_model_path = os.path.join(os.path.dirname(__file__),
+                                                "model.h5")
 
     def run(self,
-            model_path,
-            report_path):
+            model_path=None,
+            report_path=None):
+        if model_path is None:
+            model_path = self._default_model_path
         # run diag session
         DiagSession(
             config=self.custom_config,
@@ -54,5 +60,8 @@ class DiagTextClassification(object):
         ).run()
 
 
-if __name__ == '__main__':
+def main():
     fire.Fire(DiagTextClassification)
+
+if __name__ == '__main__':
+    main()
