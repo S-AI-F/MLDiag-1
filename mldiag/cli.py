@@ -17,22 +17,27 @@ def diag():
 @click.option(
     '--service_url', '-u',
     help='the url of the prediction service',
+    required=True,
 )
 @click.option(
     '--config_file', '-c',
     help='the path to a config file',
+    required=True,
 )
 @click.option(
     '--eval_set', '-e',
     help='the path to the eval dataset file',
+    required=True,
 )
 @click.option(
     '--report_path', '-r',
     help='the path to output report directory',
+    required=True,
 )
 @click.option(
     '--json_field', '-j',
     help='the json field  data returned by the webservice',
+    required=True,
 )
 def diagnose(service_url, config_file, eval_set, report_path, json_field):
     with open(config_file) as file:
