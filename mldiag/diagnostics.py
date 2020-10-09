@@ -21,7 +21,13 @@ class Diagnostics(object):
          methods.TextMethod.METHOD_TXT_SENTENCE_COUNT["name"]),
         (tasks.MacroTask.MACRO_TASK_TXT,
          tasks.MicroTask.MICRO_TASK_CLASSIFICATION,
-         methods.TextMethod.METHOD_TXT_WORD_COUNT["name"])
+         methods.TextMethod.METHOD_TXT_WORD_COUNT["name"]),
+        (tasks.MacroTask.MACRO_TASK_IMAGE,
+         tasks.MicroTask.MICRO_TASK_CLASSIFICATION,
+         methods.ImageMethod.METHOD_IMAGE_FLIP_R["name"]),
+        (tasks.MacroTask.MACRO_TASK_IMAGE,
+         tasks.MicroTask.MICRO_TASK_CLASSIFICATION,
+         methods.ImageMethod.METHOD_IMAGE_ROTATE["name"])
     ]
 
     @staticmethod

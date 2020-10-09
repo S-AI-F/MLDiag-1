@@ -40,6 +40,11 @@ or install the latest version (include BETA features) from github directly
 ```bash
 pip install git+https://github.com/AI-MEN/mldiag.git
 ```
+
+To check install:
+```bash
+mldiag_test run
+```
 ### Run a diagostic
 
 #### Method 1: 
@@ -66,11 +71,11 @@ a test set `test.npy` is saved in `mldiag`.
 It contains a numpy array of text examples and their class labels
 - run the diagnostic application calling the web service
 ```bash
-python mldiag/cli.py diagnose   --eval_set "./mldiag/test.npy" 
-                                --config_file  "examples/text_classification/config_text_classification.yaml" 
-                                --service_url http://localhost:8080/query
-                                --report_path "./mldiag"
-                                --json_field "results"
+mldiag diagnose     --eval_set "./mldiag/test.npy" 
+                    --config_file  "examples/text_classification/config_text_classification.yaml" 
+                    --service_url http://localhost:8080/query
+                    --report_path "./mldiag"
+                    --json_field "results"
 ```
 where `results` is the key used to jsonify data from the webservice (see the web service script).
 <p align="center">

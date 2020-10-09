@@ -49,6 +49,7 @@ class DiagSession(object):
         pred = self.service.predict(
             runner['fn'](dataset=self.eval_set)
         )
+        print(len(pred))
         pred = np.argmax(pred, axis=-1)
         if runner["name"] == "none":
             self.original_y_pred = pred

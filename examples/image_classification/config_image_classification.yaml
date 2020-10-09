@@ -1,0 +1,3 @@
+task: image:classification
+diag_services: all
+batch_size: 32

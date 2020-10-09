@@ -1,6 +1,6 @@
 from typing import List, Dict
 
-from mldiag import augmentors, descriptors
+from mldiag import augmenters, descriptors
 
 
 class Method:
@@ -8,7 +8,7 @@ class Method:
     NONE = {
         "type": "augment",
         "name": "none",
-        "fn": augmentors.none_augmenter
+        "fn": augmenters.none_augmenter
     }
 
     @staticmethod
@@ -38,7 +38,7 @@ class Method:
         get all methods
         :return:
         """
-        return TextMethod.get_all()
+        return TextMethod.get_all() + ImageMethod.get_all()
 
     @staticmethod
     def get_all_names() -> List[str]:
@@ -46,7 +46,7 @@ class Method:
         get all method names
         :return:
         """
-        return TextMethod.get_all_names() + ["none", "all"]
+        return TextMethod.get_all_names() + ["none", "all"] + ImageMethod.get_all_names()
 
     @staticmethod
     def check(method: str) -> str:
@@ -70,7 +70,7 @@ class TextMethod:
     METHOD_CHAR_OCR = {
         "type": "augment",
         "name": "char_ocr",
-        "fn": augmentors.text_ocr_augmnter
+        "fn": augmenters.text_ocr_augmenter
     }
 
     METHOD_TXT_CHAR_COUNT = {
@@ -106,3 +106,39 @@ class TextMethod:
         :return:
         """
         return [m["name"] for m in TextMethod.get_all()]
+
+
+class ImageMethod:
+    """
+    Text methods only
+    """
+
+    # augment an imge with filp
+    METHOD_IMAGE_FLIP_R = {
+        "type": "augment",
+        "name": "image_flip_r",
+        "fn": augmenters.image_flip_r_augmenter
+    }
+
+    # augment an imge with filp
+    METHOD_IMAGE_ROTATE = {
+        "type": "augment",
+        "name": "image_rotate",
+        "fn": augmenters.image_rot_augmenter
+    }
+
+    @staticmethod
+    def get_all() -> List[Dict]:
+        """
+        get all text methods
+        :return:
+        """
+        return [ImageMethod.__dict__[m] for m in ImageMethod.__dict__.keys() if m.startswith("METHOD_")]
+
+    @staticmethod
+    def get_all_names() -> List[str]:
+        """
+        get all text method names
+        :return:
+        """
+        return [m["name"] for m in ImageMethod.get_all()]

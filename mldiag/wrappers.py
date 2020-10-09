@@ -13,8 +13,17 @@ def txt_tfds_to_numpy(
 ):
     for datapoint in list(tfds.as_numpy(dataset)):
         data, label = datapoint
+        print(data.shape)
         v = np.vectorize(lambda x: x.decode("utf-8"))
         data = v(data)
+        yield data, np.asarray(label)
+
+
+def image_tfds_to_numpy(
+        dataset: tf.data.Dataset
+):
+    for datapoint in list(tfds.as_numpy(dataset)):
+        data, label = datapoint
         yield data, np.asarray(label)
 
 
