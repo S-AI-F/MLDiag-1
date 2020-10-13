@@ -1,10 +1,9 @@
-.. MLDiag documentation master file, created by
-sphinx-quickstart on Sat Oct 10 00:18:23 2020.
-You can adapt this file completely to your liking, but it should at least
-contain the root `toctree` directive.
-
 Welcome to MLDiag's documentation!
 ==================================
+`mldiag` is a library for machine learning model diagnosis.
+The goal is to measure model robustness and behavior before deployment in production.
+
+
 
 Documentation for the Code
 **************************
@@ -12,24 +11,10 @@ Documentation for the Code
    :maxdepth: 2
    :caption: Contents:
 
-MLDiag main
-===================
-.. automodule:: mldiag.cli
-   :members:
+   ./overview
+   ./example
 
-MLDiag session
-=====================
-.. automodule:: mldiag.session
-   :members:
-
-
-
-MLDiag augmenters
-=====================
-.. automodule:: mldiag.augmenters
-   :members:
-
-
+See :ref:`modindex` for API.
 
 Indices and tables
 ==================
