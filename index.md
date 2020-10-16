@@ -1,4 +1,4 @@
-## Welcome to GitHub Pages
+## Welcome to MLDiag Pages
 
 You can use the [editor on GitHub](https://github.com/S-AI-F/MLDiag-1/edit/gh-pages/index.md) to maintain and preview the content for your website in Markdown files.
 
